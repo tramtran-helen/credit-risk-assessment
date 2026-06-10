@@ -28,49 +28,57 @@ The model takes the following inputs to make a prediction:
 
 ```
 credit_card/
-├── app.py                              # Flask application
-├── model.pkl                           # Pre-trained model
-├── UCI_Credit_Card.csv                 # Dataset
-├── Credit Card Default Prediction.ipynb  # EDA & model training notebook
+├── app.py                                      # Flask application
+├── model.pkl                                   # Pre-trained model
+├── UCI_Credit_Card.csv                         # Dataset
+├── Credit Card Default Prediction.ipynb        # EDA & model training
+├── assets/                                     # README images
 └── templates/
-    └── index.html                      # Web UI
+    └── index.html                              # Web UI
 ```
 
 ## Getting Started
 
-**1. Clone the repository**
-```bash
-git clone https://github.com/tramtran-helen/credit-risk-assessment.git
-cd credit-risk-assessment/credit_card
-```
+1. Clone the repository
+   ```bash
+   git clone https://github.com/tramtran-helen/credit-risk-assessment.git
+   cd credit-risk-assessment/credit_card
+   ```
 
-**2. Install dependencies**
-```bash
-pip install flask pandas scikit-learn
-```
+2. Install dependencies
+   ```bash
+   pip install flask pandas scikit-learn
+   ```
 
-**3. Run the app**
-```bash
-python app.py
-```
+3. Run the app
+   ```bash
+   python app.py
+   ```
 
-**4. Open in browser**
-```
-http://localhost:5001
-```
+4. Open `http://localhost:5001` in your browser
+
+## Exploratory Data Analysis
+
+### Class Distribution
+The dataset is imbalanced — ~78% of customers did not default, ~22% did. This context is important for interpreting model precision and recall.
+
+![Default Distribution](credit_card/assets/default_distribution.png)
+
+### Payment Status vs. Default
+September payment status (PAY_0) is the strongest predictor. Customers with delays of 2+ months have significantly higher default rates.
+
+![Payment Status vs Default](credit_card/assets/payment_status_vs_default.png)
+
+### Credit Limit by Default
+Customers with lower credit limits default more — the default group (blue) peaks at lower balances compared to the non-default group (red).
+
+![Credit Limit by Default](credit_card/assets/credit_limit_by_default.png)
 
 ## Model Performance
 
-| Metric    | Class 0 (No Default) | Class 1 (Default) |
-|-----------|----------------------|-------------------|
-| Precision | 0.82                 | 0.69              |
-| Recall    | 0.97                 | 0.24              |
-| F1-score  | 0.89                 | 0.35              |
-| **Accuracy** | **0.81**          |                   |
-
-## Dataset
-
-- **Source**: UCI Machine Learning Repository
-- **Records**: 30,000 customers
-- **Target variable**: `default.payment.next.month` (1 = default, 0 = no default)
-- **Class distribution**: ~78% no default, ~22% default
+| Metric       | No Default (0) | Default (1) |
+|--------------|----------------|-------------|
+| Precision    | 0.82           | 0.69        |
+| Recall       | 0.97           | 0.24        |
+| F1-score     | 0.89           | 0.35        |
+| **Accuracy** | **0.81**       |             |
